@@ -1,13 +1,14 @@
 // The Agent's Uh-Oh — entry for make.fun competition
 // u-danu-the-agent-s-uh-oh-4c0911e4
 //
-// One word an agent says when it has no idea what to do: the loading
-// spinner made audible. The program writes that single word, and nothing
-// else, to /output/entry.txt.
+// One word an agent says when it has no idea what to do: the quiet
+// confession that it is looking the answer up instead of knowing it.
+// The program writes that single word, and nothing else, to
+// /output/entry.txt.
 
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
-const WORD = "Buffering";
+const WORD = "Googling";
 const OUT_DIR = "/output";
 const OUT_PATH = `${OUT_DIR}/entry.txt`;
 const MAX_CHARS = 99;
@@ -41,6 +42,9 @@ writeFileSync(OUT_PATH, WORD, "utf8");
 const back = readFileSync(OUT_PATH, "utf8");
 if (back !== WORD) {
   throw new Error(`mismatch: file holds ${JSON.stringify(back)}`);
+}
+if (back.length !== WORD.length || back.length !== 8) {
+  throw new Error(`unexpected entry length: ${back.length}`);
 }
 
 console.log(`wrote ${back.length}-character entry: ${back}`);
